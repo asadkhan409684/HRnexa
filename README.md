@@ -319,4 +319,93 @@
 
 ---
 
+## Key Project Features
+
+HRnexa is a comprehensive Enterprise-level HRM system designed for scalability and efficiency:
+
+- **Role-Based Access Control (RBAC)**: Fine-grained permissions for Super Admin, Admin, HR, Team Leader, and Employee roles.
+- **Attendance & Shift Management**: Automated tracking of punches, lates, overtime, and rotational shift rosters.
+- **End-to-End Payroll Engine**: Automated salary calculation, allowance/deduction management, and professional payslip generation.
+- **Recruitment & ATS**: Managed job requisitions, candidate workflows, and interview scheduling.
+- **Performance & Talent Management**: KPI-driven performance appraisals, skill matrix tracking, and training development programs.
+- **Lifecycle Management**: Streamlined onboarding and offboarding (exit clearance) processes.
+- **Asset & Expense Tracking**: Integrated inventory management and reimbursement approval workflows.
+- **Advanced Audit & Compliance**: System-wide audit logs, database backups, and automated compliance health reports.
+
+---
+
+## Core Database Tables
+
+The system's technical foundation relies on these essential tables:
+
+| Table Category | Key Tables | Purpose |
+| :--- | :--- | :--- |
+| **Identity** | `users`, `roles`, `permissions` | Centralized authentication and granular access control. |
+| **Personnel** | `employees`, `departments`, `designations` | Core organizational structure and employee lifecycles. |
+| **Operations** | `attendance`, `leave_applications`, `attendance_corrections` | Tracking day-to-day work status and absence requests. |
+| **Payroll** | `payroll_runs`, `payslips`, `allowances`, `deductions` | Financial processing engine for generating monthly salaries. |
+| **Assets/Finance** | `assets`, `asset_assignments`, `expense_claims` | Inventory tracking and employee reimbursement claims. |
+| **System** | `modules`, `system_settings`, `audit_logs`, `system_backups` | Platform configuration, feature toggles, and security logs. |
+
+---
+
+## Technical Overview
+
+### Folder Structure
+
+```text
+HRnexa/
+├── app/                # Core Application Logic
+│   ├── Config/         # Configuration files (Database, App settings)
+│   ├── Controllers/    # Application Controllers (MVC Pattern)
+│   ├── Core/           # System Core (Router, Auth, etc.)
+│   ├── Helpers/        # Global helper functions
+│   ├── Middleware/     # Request middleware (Authentication, RBAC)
+│   └── Models/         # Database Models
+├── database/           # Database schema and migration files
+├── modules/            # Domain-specific modules (Traditional PHP approach)
+│   ├── admin/          # Admin dashboard and operations
+│   ├── employee/       # Employee self-service features
+│   ├── hr/             # HR operations (Attendance, Payroll, etc.)
+│   ├── super_admin/    # System-level configurations
+│   └── team_leader/    # Team management tools
+├── public/             # Publicly accessible assets and landing pages
+├── routes/             # Route definitions (web.php, api.php)
+├── storage/            # System-generated logs and uploads
+├── views/              # UI templates and layouts
+├── index.php           # Front Controller (Entry Point)
+└── README.md           # Project Documentation
+```
+
+### Data Flow Diagram
+
+The following diagram illustrates how a request flows through HRnexa:
+
+```mermaid
+graph TD
+    A[Client Request] -->|URL| B(index.php)
+    B --> C{Router.php}
+    
+    subgraph Routing
+        C -->|Matches Route| D[Controller]
+        C -->|No Match| E[Static Module/Public File]
+    end
+    
+    subgraph Execution
+        D -->|Business Logic| F[Business Logic]
+        E -->|Direct Execution| F
+        F --> G[Model/Database]
+        G --> H[View/Response]
+    end
+    
+    H -->|HTML/JSON| I[Client]
+    
+    style B fill:#f9f,stroke:#333,stroke-width:2px
+    style C fill:#bbf,stroke:#333,stroke-width:2px
+    style D fill:#dfd,stroke:#333,stroke-width:2px
+    style E fill:#fdd,stroke:#333,stroke-width:2px
+```
+
+---
+
 ## END OF SYSTEM STRUCTURE
